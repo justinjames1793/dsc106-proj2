@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
     <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Project 2 Report</title>
         <style>
             :root {
@@ -112,6 +114,11 @@
                 text-align: center;
                 background: white;
 
+                img {
+                    max-width: 100%;
+                    height: auto;
+                }
+
                 > figcaption {
                     font: 500 75% var(--font-sans);
                     background: var(--color-neutral-95);
@@ -138,6 +145,13 @@
                     }
                 }
             }
+
+            /* Design decision scores */
+
+            .score {
+                font-variant-numeric: tabular-nums;
+                color: var(--color-neutral-40);
+            }
         </style>
     </head>
 
@@ -148,26 +162,86 @@
                 Persuasive or Deceptive Visualization?
             </h1>
 
-            <p><strong>Your Name</strong> — <em>Your UCSD Email Address</em></p>
+            <!-- TODO: replace with each member's full name and UCSD email -->
+            <p><strong>Adam [Last name]</strong> — <em>Ahamadene@ucsd.edu</em></p>
+            <p><strong>Justin [Last name]</strong> — <em>[email]@ucsd.edu</em></p>
+            <p><strong>Emiliano [Last name]</strong> — <em>eifranco@ucsd.edu</em></p>
+            <p><strong>David [Last name]</strong> — <em>day023@ucsd.edu</em></p>
         </header>
 
         <main>
-            <h2>Proposition: [STATE PROPOSITION]</h2>
+            <h2>Proposition: NYPD officers are not held liable for civilian allegations of misconduct.</h2>
+
+            <p>
+                Data: New York City Civilian Complaint Review Board (CCRB) records of
+                33,358 allegations against 3,996 NYPD officers, 1985–2020, released by
+                <a href="https://www.propublica.org/datastore/dataset/civilian-complaints-against-new-york-city-police-officers">ProPublica</a>
+                in July 2020. The release includes only officers still on the force in June 2020
+                who had at least one substantiated allegation. Design decisions are scored from
+                −2 (fully deceptive) to +2 (fully earnest).
+            </p>
 
             <section>
                 <h3>FOR the Proposition</h3>
 
                 <figure>
-                    <img src="IMAGE_FILENAME" alt="" />
-                    <figcaption>BRIEF CAPTION HERE.</figcaption>
+                    <img
+                        src="vis_for.png"
+                        alt="Stacked bars splitting all 33,358 CCRB allegations into formal charges (11%), lesser penalty (14%) and no penalty (75%), a yearly breakdown from 2000 to 2019 in which formal charges fall to 1.2% in 2019, and a large red zero stating that none of 3,996 officers had lost their badge by 2020."
+                    />
+                    <figcaption>
+                        Recommended outcomes of CCRB allegations: all 33,358 allegations
+                        (1985–2020), and the same split by the year each case closed
+                        (2000–2019). Source: NYC CCRB records via
+                        <a href="https://www.propublica.org/datastore/dataset/civilian-complaints-against-new-york-city-police-officers">ProPublica</a>
+                        (2020).
+                    </figcaption>
                 </figure>
 
                 <p>Design Decisions and Rationale:</p>
 
                 <ul>
-                    <li>RATIONALE_1</li>
-                    <li>RATIONALE_2</li>
-                    <li>RATIONALE_3</li>
+                    <li>
+                        <strong>“0 of 3,996 officers had lost their badge by 2020”</strong>
+                        <span class="score">(−2)</span>. The dataset only includes officers
+                        still on the force in 2020, so this number has to be zero. It isn’t a
+                        finding. “Lost their badge” implies removal as a penalty, and the large
+                        red number makes it read as the chart’s conclusion. We considered a
+                        smaller callout but kept the large red number because it anchors the
+                        eye first.
+                    </li>
+                    <li>
+                        <strong>Unexplained drop in formal charges</strong>
+                        <span class="score">(−1)</span>. Charges fell from 27% (2004) to 1.2%
+                        (2019), but mostly because the CCRB added new mid-level penalties in
+                        2014–15. We show the drop without saying why, so it looks like
+                        accountability disappeared.
+                    </li>
+                    <li>
+                        <strong>Data transformations</strong>
+                        <span class="score">(−0.5)</span>. We collapsed the 11 dispositions
+                        into three outcomes, calculated each outcome’s share per year closed
+                        (2000–2019, since earlier years are sparse and 2020 is partial), and
+                        counted unique officers. Counting allegations rather than complaints
+                        gives the lower rate (25% vs. 32%).
+                    </li>
+                    <li>
+                        <strong>Part-to-whole encoding on a full 0–100% scale</strong>
+                        <span class="score">(+1)</span>. Both panels use the same three colors
+                        and sum to 100%, which is honest and makes the red look small. We
+                        widened the two grays to about 31 L* apart, checked the colors for
+                        colorblindness, and labeled every segment directly. A truncated axis
+                        would have exaggerated the gap, but it would also have been easy to
+                        catch.
+                    </li>
+                    <li>
+                        <strong>Plain labels, slanted headline</strong>
+                        <span class="score">(−0.5)</span>. We spelled out CCRB and used
+                        “confirmed misconduct” for “substantiated.” “No penalty” merges unproven
+                        cases with conduct ruled within NYPD rules. The subtitle leaves out that
+                        the board only recommends penalties, and the headline is slanted but
+                        restrained.
+                    </li>
                 </ul>
             </section>
 
@@ -175,25 +249,115 @@
                 <h3>AGAINST the Proposition</h3>
 
                 <figure>
-                    <img src="IMAGE_FILENAME" alt="" />
-                    <figcaption>BRIEF CAPTION HERE.</figcaption>
+                    <img
+                        src="vis_against.png"
+                        alt="Waffle chart of 100 squares, each 1%, for CCRB penalty recommendations on substantiated force allegations: 63% formal charges (616 allegations), 31% other discipline (302) and 6% no penalty recommended (58), headlined 94% led to discipline."
+                    />
+                    <figcaption>
+                        CCRB penalty recommendations for substantiated civilian force
+                        allegations against NYPD officers; each square = 1%. Source: NYC CCRB
+                        records via
+                        <a href="https://www.propublica.org/datastore/dataset/civilian-complaints-against-new-york-city-police-officers">ProPublica</a>
+                        (2020).
+                    </figcaption>
                 </figure>
 
                 <p>Design Decisions and Rationale:</p>
 
                 <ul>
-                    <li>RATIONALE_1</li>
-                    <li>RATIONALE_2</li>
-                    <li>RATIONALE_3</li>
+                    <li>
+                        <strong>Only considering substantiated allegations</strong>
+                        <span class="score">(−1.5)</span>. The graph only reflects the 976
+                        substantiated force allegations, so 63% formal charges appears high.
+                        These make up only 13% of all 7,636 force allegations, and that
+                        denominator is invisible to the reader.
+                    </li>
+                    <li>
+                        <strong>Presenting recommendations as results</strong>
+                        <span class="score">(−1)</span>. The chart shows CCRB recommendations,
+                        but the final decision belongs to the NYPD Police Commissioner, who can
+                        reduce the punishment or dismiss it altogether.
+                    </li>
+                    <li>
+                        <strong>Counting training as “discipline”</strong>
+                        <span class="score">(−1)</span>. “Other discipline” combines command
+                        discipline with formalized training and instructions. That makes the
+                        “94% led to discipline” statement sound valid, even though training may
+                        not be considered a punishment at all.
+                    </li>
+                    <li>
+                        <strong>Waffle chart with figures</strong>
+                        <span class="score">(+1)</span>. Each square equals 1%, which makes
+                        the chart easy to read, and every percentage is paired with its
+                        allegation count, so the numbers themselves are not distorted.
+                    </li>
+                    <li>
+                        <strong>Headings and citation</strong>
+                        <span class="score">(+1.5)</span>. The subtitle states that the chart
+                        shows “penalty recommendations” for “substantiated” allegations and
+                        cites the source, although it is set in small gray type that is easy to
+                        skip.
+                    </li>
                 </ul>
             </section>
 
             <section>
                 <h2>Final Reflection</h2>
 
-                <p>[WRITE FINAL REFLECTION PARAGRAPHS HERE.]</p>
+                <p>
+                    Both visualizations start from the same ProPublica release of CCRB records.
+                    The data needed little cleaning for our purposes: the fields we relied on
+                    (allegation category, board disposition, year closed and officer ID) have
+                    no missing values, so most of the work was transformation. For Figure 2 we
+                    filtered to the 7,636 force allegations and then to the 976 that were
+                    substantiated, grouped the recommendations into formal charges, other
+                    discipline and no penalty, and rounded each share to whole squares.
+                    <mark>[TODO: name the tool used to build Figure 2.]</mark>
+                    For Figure 1, most of the work happened before any chart was drawn: we
+                    collapsed the CCRB’s 11 disposition codes into three outcomes a general
+                    reader could follow, computed each outcome’s share by the year each case
+                    closed, and counted unique officers for the callout. We built both of its
+                    panels in matplotlib in a Jupyter notebook. The encodings were the easy
+                    part, since a full 0–100% part-to-whole chart is simple to build and hard to
+                    criticize. The harder parts were getting matplotlib’s defaults to look
+                    clean (direct labels, aligned panels, and a palette checked for
+                    colorblindness) and, above all, making the deception subtle enough to
+                    survive a second look.
+                </p>
+
+                <p>
+                    What surprised us most was how much the story depended on choosing the
+                    denominator. The same dataset let us honestly report that 94% of
+                    substantiated force allegations led to a disciplinary recommendation, and
+                    that only 8% of all force allegations ended in a recommendation of formal
+                    charges. We were also surprised that our most deceptive elements were
+                    accurate. Formal charges really did fall from 27% of allegations in 2004 to
+                    1.2% in 2019, but mostly because the CCRB added new mid-level penalties in
+                    2014–15, which is visible in the growing gray band, not because
+                    accountability disappeared. “0 of 3,996 officers had lost their badge” is
+                    literally true, but the dataset only includes officers still serving in
+                    2020, so it could never have been anything else. We had expected deception
+                    to come from distorted visuals. Instead, it came almost entirely from what
+                    we left unsaid.
+                </p>
+
+                <p>
+                    We now define ethical analysis and visualization as an accurate
+                    presentation of data, with its limitations clearly disclosed and its
+                    interpretations supported by evidence. Directing attention toward a
+                    supported finding, like the dark blue squares in Figure 2, is acceptable
+                    because it uses visual channels to highlight existing data without removing
+                    or shrinking anything else. It becomes misleading when it persuades viewers
+                    to reach conclusions the data cannot establish. Likewise, analysis often
+                    requires filtering or focusing on a subgroup of the data, and transparency
+                    is what separates an acceptable choice from a misleading one. In Figure 2,
+                    the percentages do not describe the whole dataset, only the recommendations
+                    made for substantiated allegations. No mathematical errors or fabricated
+                    data are involved, but the chart is still misleading if the reader does not
+                    know the denominator. Stating that restriction plainly in the subtitle,
+                    rather than in small gray type, is the acceptable course of action.
+                </p>
             </section>
         </main>
-    <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/vce701823e78c4301a35b7e07294d87301792088814092" integrity="sha512-UKNk8GbxkABxKcXYuLkO16EleLGUkcvJWtpSNmExE0Too3ZaFAxTscNWEc1OdAv5/BikHawapSCaiD2XCmp+Bw==" data-cf-beacon='{"version":"2024.11.0","token":"c822b88e119346678db149ed7b7721c9","r":1,"spa":2}' crossorigin="anonymous"></script>
-</body>
+    </body>
 </html>
